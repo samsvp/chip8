@@ -14,8 +14,9 @@ typedef struct {
     void (*on_next_key_press)(int);
 } keyboard_t;
 
-keyboard_t init_keyboard();
+keyboard_t init_keyboard(void);
 void handle_inputs(keyboard_t* k);
-bool is_key_pressed(keyboard_t* k, int key_code);
+bool is_key_pressed(keyboard_t k, int key_code);
+void keys_to_char(keyboard_t k, char* buffer, int length);
 
 #endif

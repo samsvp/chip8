@@ -29,7 +29,7 @@ void kp_clear(keypresses_t* kp)
     kp->length = 0;
 }
 
-keyboard_t init_keyboard()
+keyboard_t init_keyboard(void)
 {
     keypresses_t kp = {
         .keys = {0},
@@ -46,22 +46,22 @@ keyboard_t init_keyboard()
 
 void handle_inputs(keyboard_t* k)
 {
-    if (IsKeyDown(KEY_ONE)) kp_add(&k->keypresses, 0x1);
-    if (IsKeyDown(KEY_TWO)) kp_add(&k->keypresses, 0x2);
-    if (IsKeyDown(KEY_THREE)) kp_add(&k->keypresses, 0x3);
-    if (IsKeyDown(KEY_FOUR)) kp_add(&k->keypresses, 0xc);
-    if (IsKeyDown(KEY_Q)) kp_add(&k->keypresses, 0x4);
-    if (IsKeyDown(KEY_W)) kp_add(&k->keypresses, 0x5);
-    if (IsKeyDown(KEY_E)) kp_add(&k->keypresses, 0x6);
-    if (IsKeyDown(KEY_R)) kp_add(&k->keypresses, 0xd);
-    if (IsKeyDown(KEY_A)) kp_add(&k->keypresses, 0x7);
-    if (IsKeyDown(KEY_S)) kp_add(&k->keypresses, 0x8);
-    if (IsKeyDown(KEY_D)) kp_add(&k->keypresses, 0x9);
-    if (IsKeyDown(KEY_F)) kp_add(&k->keypresses, 0xe);
-    if (IsKeyDown(KEY_Z)) kp_add(&k->keypresses, 0xa);
-    if (IsKeyDown(KEY_X)) kp_add(&k->keypresses, 0x0);
-    if (IsKeyDown(KEY_C)) kp_add(&k->keypresses, 0xb);
-    if (IsKeyDown(KEY_V)) kp_add(&k->keypresses, 0xf);
+    if (IsKeyPressed(KEY_ONE)) kp_add(&k->keypresses, 0x1);
+    if (IsKeyPressed(KEY_TWO)) kp_add(&k->keypresses, 0x2);
+    if (IsKeyPressed(KEY_THREE)) kp_add(&k->keypresses, 0x3);
+    if (IsKeyPressed(KEY_FOUR)) kp_add(&k->keypresses, 0xc);
+    if (IsKeyPressed(KEY_Q)) kp_add(&k->keypresses, 0x4);
+    if (IsKeyPressed(KEY_W)) kp_add(&k->keypresses, 0x5);
+    if (IsKeyPressed(KEY_E)) kp_add(&k->keypresses, 0x6);
+    if (IsKeyPressed(KEY_R)) kp_add(&k->keypresses, 0xd);
+    if (IsKeyPressed(KEY_A)) kp_add(&k->keypresses, 0x7);
+    if (IsKeyPressed(KEY_S)) kp_add(&k->keypresses, 0x8);
+    if (IsKeyPressed(KEY_D)) kp_add(&k->keypresses, 0x9);
+    if (IsKeyPressed(KEY_F)) kp_add(&k->keypresses, 0xe);
+    if (IsKeyPressed(KEY_Z)) kp_add(&k->keypresses, 0xa);
+    if (IsKeyPressed(KEY_X)) kp_add(&k->keypresses, 0x0);
+    if (IsKeyPressed(KEY_C)) kp_add(&k->keypresses, 0xb);
+    if (IsKeyPressed(KEY_V)) kp_add(&k->keypresses, 0xf);
 
     if (IsKeyUp(KEY_ONE)) kp_remove(&k->keypresses, 0x1);
     if (IsKeyUp(KEY_TWO)) kp_remove(&k->keypresses, 0x2);
@@ -86,10 +86,46 @@ void handle_inputs(keyboard_t* k)
     }
 }
 
-bool is_key_pressed(keyboard_t* k, int key_code)
+void keys_to_char(keyboard_t k, char* buffer, int length)
 {
-    for (int i = 0; i < k->keypresses.length; i++) {
-        if (k->keypresses.keys[i] == key_code) {
+    int i;
+    for (i = 0; i < k.keypresses.length; i++) {
+        // will not fit the buffer
+        if (length <= i) {
+            return;
+        }
+
+        char c = '?';
+        switch (k.keypresses.keys[i]) {
+            case 0x1: c = '1'; break;
+            case 0x2: c = '2'; break;
+            case 0x3: c = '3'; break;
+            case 0xc: c = 'C'; break;
+            case 0x4: c = '4'; break;
+            case 0x5: c = '5'; break;
+            case 0x6: c = '6'; break;
+            case 0xd: c = 'D'; break;
+            case 0x7: c = '7'; break;
+            case 0x8: c = '8'; break;
+            case 0x9: c = '9'; break;
+            case 0xe: c = 'E'; break;
+            case 0xa: c = 'A'; break;
+            case 0x0: c = '0'; break;
+            case 0xb: c = 'B'; break;
+            case 0xf: c = 'F'; break;
+        }
+        buffer[i] = c;
+    }
+
+    if (length > i) {
+        buffer[i] = '\0';
+    }
+}
+
+bool is_key_pressed(keyboard_t k, int key_code)
+{
+    for (int i = 0; i < k.keypresses.length; i++) {
+        if (k.keypresses.keys[i] == key_code) {
             return true;
         }
     }

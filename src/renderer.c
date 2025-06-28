@@ -41,7 +41,7 @@ void clear(renderer_t* r)
     memset(r->display, false, sizeof r->display);
 }
 
-void render(renderer_t* r)
+void render(renderer_t* r, char* keys)
 {
     int rect_size = r->scale;
 
@@ -55,6 +55,7 @@ void render(renderer_t* r)
             DrawRectangle(x, y, rect_size, rect_size, BLACK);
         }
     }
+    DrawText(keys, 0, 0, 30, RED);
     EndDrawing();
 }
 

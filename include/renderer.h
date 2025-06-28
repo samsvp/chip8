@@ -26,7 +26,7 @@ void clear(renderer_t* r);
 /**
  * Renders the pixels in r.display
  */
-void render(renderer_t* r);
+void render(renderer_t* r, char* keys);
 /**
  * Deinitializes the renderer
  */
