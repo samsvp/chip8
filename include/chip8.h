@@ -3,10 +3,12 @@
 
 #include "keyboard.h"
 #include "renderer.h"
+#include "sound.h"
 
 typedef struct {
     renderer_t renderer;
     keyboard_t keyboard;
+    sound_t* sound;
     int fps;
     double previous_time;
     double current_time;
