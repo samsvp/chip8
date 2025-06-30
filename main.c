@@ -2,13 +2,19 @@
 #include "include/chip8.h"
 #include <stdio.h>
 
-int main(void)
+int main(int argc, char **argv)
 {
-    renderer_t r = renderer_init(10);
+    if (argc != 2) {
+        printf("Usage:\n");
+        printf("./chip-8.out rom-name:\n");
+        return 0;
+    }
 
+    renderer_t r = renderer_init(10);
     chip8_t c = chip8_init(r);
-    if (!load_rom(&c, "roms/BLINKY")) {
-        printf("Could not load the provided rom.");
+    char* rom_name = argv[1];
+    if (!load_rom(&c, rom_name)) {
+        printf("Could not load the provided rom %s.\n", rom_name);
         return 1;
     }
     chip8_run(&c, 10);

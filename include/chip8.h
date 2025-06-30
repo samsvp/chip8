@@ -19,7 +19,7 @@ typedef struct {
     uint16_t I;
 
     uint16_t pc;
-    int8_t sp;
+    uint8_t sp;
 
     uint16_t stack[16];
 

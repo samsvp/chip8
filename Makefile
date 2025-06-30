@@ -14,7 +14,7 @@ $(TARGET): $(ALL_SRC)
 	$(CC) $(ALL_SRC) $(CFLAGS) -o $@
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) $(ROM_NAME)
 
 clean:
 	rm -f $(TARGET)

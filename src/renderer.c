@@ -16,19 +16,8 @@ renderer_t renderer_init(int scale)
 
 bool set_pixel(renderer_t* r, int x, int y)
 {
-    // wrap the pixel value
-    while (x > COLS) {
-        x -= COLS;
-    }
-    while (x < 0) {
-        x += COLS;
-    }
-    while (y > ROWS) {
-        y -= ROWS;
-    }
-    while (y < 0) {
-        y += ROWS;
-    }
+    x = ((x % COLS) + COLS) % COLS;
+    y = ((y % ROWS) + ROWS) % ROWS;
 
     int loc = x + y * COLS;
     // toggle

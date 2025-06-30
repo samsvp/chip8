@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ROM_MAX_SIZE 4096 - 512
+#define ROM_MAX_SIZE (4096 - 512)
 
 chip8_t chip8_init(renderer_t r)
 {
