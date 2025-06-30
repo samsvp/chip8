@@ -83,6 +83,7 @@ typedef struct {
 
 static void on_next_keypress(void* ctx, int keycode)
 {
+    printf("hi, keycode is %d\n", keycode);
     keypress_ctx* kc = ctx;
     kc->c->V[kc->x] = (uint8_t)keycode;
     free(ctx);
@@ -156,22 +157,30 @@ static void exec_opcode(chip8_t* c, uint16_t opcode)
                     c->V[0xF] = res > 255 ? 1 : 0;
                     break;
                 }
-                case 0x5:
-                    c->V[0xF] = c->V[x] > c->V[y];
+                case 0x5: {
+                    uint8_t carry = c->V[y] <= c->V[x];
                     c->V[x] -= c->V[y];
+                    c->V[0xF] = carry;
                     break;
-                case 0x6:
-                    c->V[0xF] = c->V[x] & 0x1;
+                }
+                case 0x6: {
+                    uint8_t carry = c->V[x] & 0x1;
                     c->V[x] >>= 1;
+                    c->V[0xF] = carry;
+                }
                     break;
-                case 0x7:
-                    c->V[0xF] = c->V[y] > c->V[x];
+                case 0x7: {
+                    uint8_t carry = c->V[x] <= c->V[y];
                     c->V[x] = c->V[y] - c->V[x];
+                    c->V[0xF] = carry;
                     break;
-                case 0xE:
-                    c->V[0xF] = c->V[x] & 0x80;
+                }
+                case 0xE: {
+                    uint8_t carry = (c->V[x] >> 7) & 0x1;
                     c->V[x] <<= 1;
+                    c->V[0xF] = carry;
                     break;
+                }
             }
 
             break;
