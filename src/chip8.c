@@ -252,9 +252,9 @@ static void exec_opcode(chip8_t* c, uint16_t opcode)
                     c->I = ((uint16_t)c->V[x]) * 5;
                     break;
                 case 0x33:
-                    c->V[c->I] = c->V[x] / 100;
-                    c->V[c->I + 1] = c->V[x] % 100 / 10;
-                    c->V[c->I + 2] = c->V[x] % 10;
+                    c->memory[c->I] = c->V[x] / 100;
+                    c->memory[c->I + 1] = c->V[x] % 100 / 10;
+                    c->memory[c->I + 2] = c->V[x] % 10;
                     break;
                 case 0x55:
                     for (uint8_t i = 0; i <= x; i++) {
