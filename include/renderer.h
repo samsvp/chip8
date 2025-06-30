@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #define COLS 64
-#define ROWS 64
+#define ROWS 32
 
 typedef struct {
     int scale;

@@ -38,7 +38,8 @@ keyboard_t init_keyboard(void)
 
     keyboard_t k = {
         .keypresses = kp,
-        .on_next_key_press = NULL
+        .on_next_key_press = NULL,
+        .ctx = NULL,
     };
 
     return k;
@@ -81,8 +82,9 @@ void handle_inputs(keyboard_t* k)
     if (IsKeyUp(KEY_V)) kp_remove(&k->keypresses, 0xf);
 
     if (k->on_next_key_press != NULL && k->keypresses.length > 0) {
-        k->on_next_key_press(k->keypresses.keys[0]);
+        k->on_next_key_press(k->ctx, k->keypresses.keys[0]);
         k->on_next_key_press = NULL;
+        k->ctx = NULL;
     }
 }
 

@@ -18,8 +18,8 @@ typedef struct {
     uint8_t V[16];
     uint16_t I;
 
-    uint16_t program_counter;
-    uint8_t stack_pointer;
+    uint16_t pc;
+    int8_t sp;
 
     uint16_t stack[16];
 
@@ -37,7 +37,7 @@ chip8_t chip8_init(renderer_t r);
 /**
  * Start running the chip 8 VM
  */
-void chip8_run(chip8_t* c);
+void chip8_run(chip8_t* c, int speed);
 bool load_rom(chip8_t* c, const char* path);
 
 #endif

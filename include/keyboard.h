@@ -11,7 +11,8 @@ typedef struct {
 
 typedef struct {
     keypresses_t keypresses;
-    void (*on_next_key_press)(int);
+    void (*on_next_key_press)(void* ctx, int);
+    void* ctx;
 } keyboard_t;
 
 keyboard_t init_keyboard(void);
