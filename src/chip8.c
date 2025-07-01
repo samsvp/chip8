@@ -83,9 +83,9 @@ typedef struct {
 
 static void on_next_keypress(void* ctx, int keycode)
 {
-    printf("hi, keycode is %d\n", keycode);
     keypress_ctx* kc = ctx;
     kc->c->V[kc->x] = (uint8_t)keycode;
+    kc->c->paused = false;
     free(ctx);
 }
 
@@ -293,12 +293,12 @@ static void cycle(chip8_t* c, int instructions_per_cycle)
 
     // update timers
     if (!c->paused) {
-        if (c->delay_timer > 0) {
-            c->delay_timer--;
-        }
         if (c->sound_timer > 0) {
             c->sound_timer--;
         }
+    }
+    if (c->delay_timer > 0) {
+        c->delay_timer--;
     }
 
     if (c->sound_timer > 0) {

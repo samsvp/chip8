@@ -17,7 +17,7 @@ int main(int argc, char **argv)
         printf("Could not load the provided rom %s.\n", rom_name);
         return 1;
     }
-    chip8_run(&c, 10);
+    chip8_run(&c, 1);
     renderer_deinit(&r);
 
     return 0;
